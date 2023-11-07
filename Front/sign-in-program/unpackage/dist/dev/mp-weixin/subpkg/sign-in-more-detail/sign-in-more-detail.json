@@ -1,0 +1,6 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "student-attendance": "/components/Student-attendance/Student-attendance"
+  }
+}

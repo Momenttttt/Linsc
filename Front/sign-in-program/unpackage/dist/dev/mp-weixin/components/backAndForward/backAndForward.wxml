@@ -1,0 +1,1 @@
+<view class="body"><van-icon class="left" vue-id="25d4423c-1" size="30px" name="arrow-left" data-event-opts="{{[['^click',[['gotoLast']]]]}}" data-com-type="wx" bind:click="__e" bind:__l="__l"></van-icon><van-icon class="right" vue-id="25d4423c-2" size="30px" name="arrow" data-com-type="wx" bind:__l="__l"></van-icon></view>

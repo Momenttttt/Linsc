@@ -1,0 +1,6 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "class-detail": "/components/class-detail/class-detail"
+  }
+}

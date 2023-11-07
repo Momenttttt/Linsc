@@ -1,0 +1,1 @@
+<view class="box"><text class="className">班级名称</text><text class="classDesc">班级描述</text><van-button vue-id="ae388cbc-1" color="#f2f5f9" data-com-type="wx" bind:__l="__l" vue-slots="{{['default']}}">进入班级</van-button></view>

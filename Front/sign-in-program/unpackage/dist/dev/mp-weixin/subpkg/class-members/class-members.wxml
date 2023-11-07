@@ -1,0 +1,1 @@
+<view><view class="head"><text class="Class">XXX班级</text></view><view class="body"><student vue-id="10268c7c-1" bind:__l="__l"></student><student vue-id="10268c7c-2" bind:__l="__l"></student><student vue-id="10268c7c-3" bind:__l="__l"></student><student vue-id="10268c7c-4" bind:__l="__l"></student></view></view>
