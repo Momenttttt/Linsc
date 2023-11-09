@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: sign-in
+  # 支持Swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    # TODO 注释取消分布式Session
+#    store-type: redis
+#    # 30天过期
+#    timeout: 2592000
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sign_in_application
+    username: root
+    password: Zhuang.200296
+  # Redis 配置
+  # TODO 注释取消Redis
+  redis:
+    database: 5
+    host: localhost
+    port: 6379
+    connect-timeout: 5000
+    password: Zhuang.200296
+  # 文件上传
+  servlet:
+    multipart:
+      # 最大限制
+      max-file-size: 10
+server:
+  address: 0.0.0.0
+  port: 8856
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        max-age: 2592000
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+# TODO 替换为自己的微信开发者信息
+wx:
+  ma:
+    appId: XXXX
+    appSecret: XXXX
+# 腾讯云对象存储
+cos:
+  client:
+    accessKey: xxx
+    secretKey: xxx
+    region: xxx
+    bucket: xxx
