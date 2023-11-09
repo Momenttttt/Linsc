@@ -12,19 +12,20 @@ spring:
 #    # 30天过期
 #    timeout: 2592000
   # 数据库配置
+  # TODO 改为自己数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/sign_in_application
-    username: root
-    password: Zhuang.200296
+    username: xxxx
+    password: XXXX
   # Redis 配置
-  # TODO 注释取消Redis
+  # TODO 改为自己 Redis 配置
   redis:
     database: 5
     host: localhost
     port: 6379
     connect-timeout: 5000
-    password: Zhuang.200296
+    password: XXXX
   # 文件上传
   servlet:
     multipart:
