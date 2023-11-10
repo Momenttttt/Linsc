@@ -1,5 +1,6 @@
 package com.runde.signinbackend.common;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,16 +21,19 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 状态码
      */
+    @ApiModelProperty("状态码")
     private String code;
 
     /**
      * 响应数据
      */
+    @ApiModelProperty("响应数据")
     private T data;
 
     /**
      * 消息
      */
+    @ApiModelProperty("消息")
     private String message;
 
     private static final long serialVersionUID = 1L;

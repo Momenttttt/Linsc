@@ -161,6 +161,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (user == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
+        if (user.getStatus() == 0) {
+            throw new BusinessException(ErrorCode.FORBIDENT_ERROR, "用户已被封");
+        }
         return user;
     }
 
@@ -174,7 +177,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public void validUserParams(User user) {
+    public void validUserParams(User user, Boolean add) {
+        String account = user.getAccount();
+        String password = user.getPassword();
         String unionId = user.getUnionId();
         String openId = user.getOpenId();
         String avatar = user.getAvatar();
@@ -183,13 +188,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String role = user.getRole();
         Integer sex = user.getSex();
 
-        if (StringUtils.isAnyBlank(unionId, openId)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "unionId 或 openId 不能为空");
+        // 如果是添加请求
+        if (add) {
+            if (StringUtils.isAnyBlank(account, password, unionId, openId)) {
+                if (StringUtils.isBlank(account)) {
+                    throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号不能为空");
+                }
+                if (StringUtils.isBlank(password)) {
+                    throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码不能为空");
+                }
+                if (StringUtils.isBlank(unionId)) {
+                    throw new BusinessException(ErrorCode.PARAMS_ERROR, "unionId 不能为空");
+                }
+                if (StringUtils.isBlank(openId)) {
+                    throw new BusinessException(ErrorCode.PARAMS_ERROR, "openId 不能为空");
+                }
+            }
         }
-        if (avatar != null && avatar.length() > 500) {
+
+        if (StringUtils.isNotBlank(account) && !account.matches("^[a-zA-Z0-9_]{8,15}$")) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号为 8-15 位，支持字母、数字、下划线");
+        }
+        if (StringUtils.isNotBlank(password) && !password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{8,20}$")) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码为 8-20 位，至少一个大写字符，一个小写字符和一个数字，不包含特殊字符");
+        }
+        if (StringUtils.isNotBlank(avatar) && avatar.length() > 500) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片url超出长度限制");
         }
-        if (name != null) {
+        if (StringUtils.isNotBlank(name)) {
             if (name.length() > 16) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "昵称不能超过16个字符");
             }
@@ -197,13 +223,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "昵称不能以空白字符开头或结尾");
             }
         }
-        if (personalSgn != null && personalSgn.length() > 60) {
+        if (StringUtils.isNotBlank(personalSgn) && personalSgn.length() > 60) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "个性签名不能超出60个字符");
         }
-        if (role != null && UserRoleEnum.getEnumByValue(role.toLowerCase()) == null) {
+        if (StringUtils.isNotBlank(role) && UserRoleEnum.getEnumByValue(role.toLowerCase()) == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "只可设置 admin 或 user 身份");
-        };
-        if (sex != null && (!sex.equals(0) && !sex.equals(1))) {
+        }
+        if (sex != null && (sex != 0 && sex != 1)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "只可设置 0(女) 或 1(男) 性别");
         }
     }
