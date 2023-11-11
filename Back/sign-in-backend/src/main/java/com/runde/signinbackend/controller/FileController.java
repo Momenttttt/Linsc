@@ -11,9 +11,11 @@ import com.runde.signinbackend.model.enums.FileUploadBizEnum;
 import com.runde.signinbackend.service.FileService;
 import com.runde.signinbackend.service.UserService;
 import com.runde.signinbackend.utils.ResultUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +36,7 @@ import java.io.File;
 @RestController
 @RequestMapping("/file")
 @Slf4j
+@Api(tags = "2.文件模块")
 public class FileController {
 
     @Resource
@@ -45,8 +48,10 @@ public class FileController {
     @Resource
     private CosManager cosManager;
 
-    public BaseResponse<String> uploadFile(@RequestPart("file")MultipartFile multipartFile,
-                                           @RequestBody UploadFileRequest uploadFileRequest, HttpServletRequest request) {
+    @ApiOperation("上传文件")
+    @PostMapping("/upload")
+    public BaseResponse<String> uploadFile(@RequestPart("file") MultipartFile multipartFile,
+                                           UploadFileRequest uploadFileRequest, HttpServletRequest request) {
         if (uploadFileRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
         }

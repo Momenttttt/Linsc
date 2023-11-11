@@ -1,5 +1,6 @@
 package com.runde.signinbackend.model.dto.file;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class UploadFileRequest implements Serializable {
     /**
      * 业务
      */
+    @ApiModelProperty(value = "业务（当前支持 user_avatar）", required = true)
     private String biz;
 
     private static final long serialVersionUID = 1L;

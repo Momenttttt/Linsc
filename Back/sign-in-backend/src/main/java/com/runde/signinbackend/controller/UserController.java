@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.runde.signinbackend.annotation.AuthCheck;
 import com.runde.signinbackend.common.BaseResponse;
 import com.runde.signinbackend.common.ErrorCode;
@@ -15,6 +16,9 @@ import com.runde.signinbackend.model.entity.User;
 import com.runde.signinbackend.model.vo.UserVO;
 import com.runde.signinbackend.service.UserService;
 import com.runde.signinbackend.utils.ResultUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +37,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "1.用户模块")
 public class UserController {
 
     @Resource
@@ -48,6 +53,8 @@ public class UserController {
      *
      * @param userRegisterRequest
      */
+    @ApiOperation("用户注册")
+    @ApiOperationSupport(order = 1)
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
@@ -63,6 +70,8 @@ public class UserController {
      * @param request
      * @param userLoginRequest
      */
+    @ApiOperation("用户登录")
+    @ApiOperationSupport(order = 2)
     @PostMapping("/login")
     public BaseResponse<UserVO> userLogin(HttpServletRequest request, @RequestBody UserLoginRequest userLoginRequest) {
         if (userLoginRequest == null) {
@@ -75,17 +84,19 @@ public class UserController {
      * 微信小程序登录
      *
      * @param request
-     * @param jsCode
+     * @param code
      * @param encryptedData
      * @param iv
      */
+    @ApiOperation("微信小程序登录")
+    @ApiOperationSupport(order = 3)
     @GetMapping("/login/wx_miniapp")
     public BaseResponse<UserVO> userLoginByWxMiniapp(HttpServletRequest request,
-                                                     @RequestParam("jsCode") String jsCode,
+                                                     @RequestParam("code") String code,
                                                      @RequestParam("encryptedData") String encryptedData,
                                                      @RequestParam("iv") String iv) {
         try {
-            WxMaJscode2SessionResult sessionResult = wxMaService.jsCode2SessionInfo(jsCode);
+            WxMaJscode2SessionResult sessionResult = wxMaService.jsCode2SessionInfo(code);
             String openId = sessionResult.getOpenid();
             String unionId = sessionResult.getUnionid();
             if (StringUtils.isAnyBlank(unionId, openId)) {
@@ -104,6 +115,8 @@ public class UserController {
      *
      * @param request
      */
+    @ApiOperation("用户注销")
+    @ApiOperationSupport(order = 4)
     @PostMapping("/logout")
     public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
         return ResultUtil.success(userService.userLogout(request));
@@ -114,6 +127,8 @@ public class UserController {
      *
      * @param request
      */
+    @ApiOperation(value = "获取当前登录用户", produces = "application/json")
+    @ApiOperationSupport(order = 5)
     @GetMapping("/get/login")
     public BaseResponse<UserVO> getLoginUser(HttpServletRequest request) {
         User user = userService.getLoginUser(request);
@@ -129,15 +144,17 @@ public class UserController {
      *
      * @param userAddRequest
      */
+    @ApiOperation("添加用户（管理员）")
+    @ApiOperationSupport(order = 6)
     @PostMapping("/add")
-    @AuthCheck(mustRole = "admin")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
         if (userAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User user = BeanUtil.copyProperties(userAddRequest, User.class);
         // 校验用户添加参数
-        userService.validUserParams(user);
+        userService.validUserParams(user, true);
         boolean result = userService.save(user);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_FAILED_ERROR, "用户添加失败");
@@ -150,6 +167,9 @@ public class UserController {
      *
      * @param id
      */
+    @ApiOperation("删除用户（管理员）")
+    @ApiOperationSupport(order = 7)
+    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Long", dataTypeClass = Long.class)
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> deleteUser(@RequestParam("id") Long id) {
@@ -168,14 +188,17 @@ public class UserController {
      *
      * @param userUpdateRequest
      */
+    @ApiOperation("修改用户（管理员）")
+    @ApiOperationSupport(order = 8)
     @PostMapping("/update")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
         if (userUpdateRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User user = BeanUtil.copyProperties(userUpdateRequest, User.class);
         // 校验用户修改参数
-        userService.validUserParams(user);
+        userService.validUserParams(user, false);
         boolean result = userService.updateById(user);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_FAILED_ERROR, "用户修改失败");
@@ -188,6 +211,9 @@ public class UserController {
      *
      * @param id
      */
+    @ApiOperation("根据id获取用户脱敏信息")
+    @ApiOperationSupport(order = 9)
+    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Long", dataTypeClass = Long.class)
     @GetMapping("/get/vo")
     public BaseResponse<UserVO> getUserVOById(@RequestParam("id") Long id) {
         if (id < 0) {
@@ -202,6 +228,9 @@ public class UserController {
      *
      * @param id
      */
+    @ApiOperation("根据id获取用户全部信息（管理员）")
+    @ApiOperationSupport(order = 10)
+    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Long", dataTypeClass = Long.class)
     @GetMapping("/get")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<User> getUserById(@RequestParam("id") Long id) {
@@ -216,6 +245,8 @@ public class UserController {
      *
      * @param userQueryOneRequest
      */
+    @ApiOperation("查询指定用户脱敏信息")
+    @ApiOperationSupport(order = 11)
     @PostMapping("/query/vo")
     public BaseResponse<UserVO> queryUserVO(@RequestBody UserQueryOneRequest userQueryOneRequest) {
         if (userQueryOneRequest == null) {
@@ -230,6 +261,8 @@ public class UserController {
      *
      * @param userQueryOneRequest
      */
+    @ApiOperation("查询指定用户全部信息（管理员）")
+    @ApiOperationSupport(order = 12)
     @PostMapping("/query")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<User> queryUser(@RequestBody UserQueryOneRequest userQueryOneRequest) {
@@ -244,6 +277,8 @@ public class UserController {
      *
      * @param userQueryListRequest
      */
+    @ApiOperation("分页获取用户脱敏信息")
+    @ApiOperationSupport(order = 13)
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryListRequest userQueryListRequest) {
         if (userQueryListRequest == null) {
@@ -269,6 +304,8 @@ public class UserController {
      *
      * @param userQueryListRequest
      */
+    @ApiOperation("分页获取用户全部信息（管理员）")
+    @ApiOperationSupport(order = 14)
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<User>> listUserByPage(@RequestBody UserQueryListRequest userQueryListRequest) {
@@ -288,6 +325,8 @@ public class UserController {
      *
      * @param userQueryListRequest
      */
+    @ApiOperation("不分页获取用户全部信息（管理员）")
+    @ApiOperationSupport(order = 15)
     @PostMapping("/list")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<List<User>> listUser(@RequestBody UserQueryListRequest userQueryListRequest) {
@@ -302,6 +341,8 @@ public class UserController {
      *
      * @param userUpdateBySelfRequest
      */
+    @ApiOperation("修改个人信息")
+    @ApiOperationSupport(order = 16)
     @PostMapping("/update/self")
     public BaseResponse<Boolean> updatePersonalInformation(@RequestBody UserUpdateBySelfRequest userUpdateBySelfRequest,
                                                            HttpServletRequest request) {
@@ -310,7 +351,7 @@ public class UserController {
         }
         User user = BeanUtil.copyProperties(userUpdateBySelfRequest, User.class);
         // 校验用户修改参数
-        userService.validUserParams(user);
+        userService.validUserParams(user, false);
         // 获取当前登录用户id
         Long id = userService.getLoginUser(request).getId();
         user.setId(id);
@@ -326,6 +367,9 @@ public class UserController {
      *
      * @param id
      */
+    @ApiOperation("封禁用户（管理员）")
+    @ApiOperationSupport(order = 17)
+    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Long", dataTypeClass = Long.class)
     @GetMapping("/ban")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> banUser(@RequestParam("id") Long id) {
@@ -347,6 +391,9 @@ public class UserController {
      *
      * @param id
      */
+    @ApiOperation("解封用户（管理员）")
+    @ApiOperationSupport(order = 18)
+    @ApiImplicitParam(name = "id", value = "用户id", dataType = "Long", dataTypeClass = Long.class)
     @GetMapping("/unseal")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> unsealUser(@RequestParam("id") Long id) {

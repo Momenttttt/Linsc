@@ -77,8 +77,9 @@ public interface UserService extends IService<User> {
      * 用户参数校验
      *
      * @param user
+     * @param add
      */
-    void validUserParams(User user);
+    void validUserParams(User user, Boolean add);
 
     /**
      * 获取查询条件包装器

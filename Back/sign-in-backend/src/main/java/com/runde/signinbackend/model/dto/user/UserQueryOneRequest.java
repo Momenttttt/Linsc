@@ -1,5 +1,6 @@
 package com.runde.signinbackend.model.dto.user;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,16 +21,19 @@ public class UserQueryOneRequest implements Serializable {
     /**
      * 微信 UnionId
      */
+    @ApiModelProperty("微信 unionId")
     private String unionId;
 
     /**
      * 微信 OpenId
      */
+    @ApiModelProperty("微信 openId")
     private String openId;
 
     /**
      * 账号
      */
+    @ApiModelProperty("账号")
     private String account;
 
     private static final long serialVersionUID = 1L;

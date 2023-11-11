@@ -31,7 +31,7 @@ public class FileServiceImpl implements FileService {
         // 用户上传头像
         if(FileUploadBizEnum.USER_AVATAR.equals(fileUploadBizEnum)) {
             if (size > FileConstant.ONE_M) {
-                throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小不能超过 10M");
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小不能超过 1M");
             }
             if (!Arrays.asList("jepg", "jpg", "webp", "svg", "png").contains(suffix)) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "只支持 jepg, jpg, webp, svg, png 格式");

@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/sign_in_application
-    username: xxxx
+    username: root
     password: XXXX
   # Redis 配置
   # TODO 改为自己 Redis 配置
@@ -30,7 +30,7 @@ spring:
   servlet:
     multipart:
       # 最大限制
-      max-file-size: 10
+      max-file-size: 10MB
 server:
   address: 0.0.0.0
   port: 8856
@@ -60,3 +60,13 @@ cos:
     secretKey: xxx
     region: xxx
     bucket: xxx
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 生产环境屏蔽
+  production: false
+  # 开启 Basic 认证
+  basic:
+    enable: false
+    username: admin
+    password: 123456
