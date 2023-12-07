@@ -32,7 +32,7 @@ CREATE TABLE `sg_class_info`
     `id`          bigint                                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
     `name`        varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '班级名',
     `profile`     varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL     DEFAULT NULL COMMENT '班级简介',
-    `code`        int                                                          NOT NULL COMMENT '班级码',
+    `code`        char(5)                                                         NOT NULL COMMENT '班级码',
     `create_user` bigint                                                       NOT NULL COMMENT '创建者',
     `create_time` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
