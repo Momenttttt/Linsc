@@ -1,0 +1,6 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "sign-in-detail": "/components/sign-in-detail/sign-in-detail"
+  }
+}
