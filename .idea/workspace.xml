@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fc1c418-c963-4348-afb0-155c2d4102ca" name="更改" comment="修改了班级信息表中班级码字段的类型，int-&gt;char(5)">
-      <change afterPath="$PROJECT_DIR$/Back/sign-in-backend/src/main/java/com/runde/signinbackend/controller/ClassController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/sign-in-backend/src/main/java/com/runde/signinbackend/model/dto/classInfo/ClassAddRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/sign-in-backend/src/main/java/com/runde/signinbackend/service/ClassService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/sign-in-backend/src/main/java/com/runde/signinbackend/service/impl/ClassServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="8fc1c418-c963-4348-afb0-155c2d4102ca" name="更改" comment="修改了班级信息表中班级码字段的类型，int-&gt;char(5)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +35,7 @@
     <option name="jreName" value="openjdk-18" />
   </component>
   <component name="ProjectId" id="2YTSSnDqPCmvMRbtgdG70M04F1b" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -59,6 +55,19 @@
   }
 }</component>
   <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Linsc" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Linsc" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SignInBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="sign-in-backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.runde.signinbackend.SignInBackendApplication" />
@@ -81,6 +90,7 @@
       <workItem from="1701433467072" duration="1579000" />
       <workItem from="1701837608892" duration="8380000" />
       <workItem from="1701911512095" duration="7235000" />
+      <workItem from="1701923299779" duration="22000" />
     </task>
     <task id="LOCAL-00001" summary="班级信息实体类">
       <created>1701913793689</created>
