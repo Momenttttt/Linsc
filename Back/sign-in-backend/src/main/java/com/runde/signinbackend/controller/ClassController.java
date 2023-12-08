@@ -26,7 +26,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/class")
-@Api(tags = "2.班级模块")
+@Api(tags = "3.班级模块")
 public class ClassController {
 
     @Resource
@@ -114,11 +114,11 @@ public class ClassController {
     }
 
     /**
-     * 获取用户信息（未脱敏）
+     * 获取班级信息（未脱敏）
      *
      * @param id
      */
-    @ApiOperation("根据id获取用户全部信息（管理员）")
+    @ApiOperation("根据id获取班级全部信息（管理员）")
     @ApiOperationSupport(order = 5)
     @ApiImplicitParam(name = "id", value = "班级id", dataType = "Long", dataTypeClass = Long.class)
     @GetMapping("/get")
@@ -131,7 +131,7 @@ public class ClassController {
     }
 
     /**
-     * 分页获取用户信息（脱敏）
+     * 分页获取班级信息（脱敏）
      *
      * @param classQueryListRequest
      */
@@ -158,15 +158,15 @@ public class ClassController {
     }
 
     /**
-     * 分页获取用户信息（未脱敏）
+     * 分页获取班级信息（未脱敏）
      *
      * @param classQueryListRequest
      */
-    @ApiOperation("分页获取用户全部信息（管理员）")
+    @ApiOperation("分页获取班级全部信息（管理员）")
     @ApiOperationSupport(order = 7)
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Page<Class>> listUserByPage(@RequestBody ClassQueryListRequest classQueryListRequest) {
+    public BaseResponse<Page<Class>> listClassByPage(@RequestBody ClassQueryListRequest classQueryListRequest) {
         if (classQueryListRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
