@@ -1,9 +1,12 @@
 package com.runde.signinbackend.model.vo;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
-
+@Getter
+@Setter
 public class ClassVO implements Serializable {
 
     @ApiModelProperty(value = "id",required = true)
