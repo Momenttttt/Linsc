@@ -38,6 +38,12 @@ public class ClassQueryListRequest extends PageRequest implements Serializable {
     @ApiModelProperty("创建人")
     private Integer createUser;
 
+    /**
+     * 是否删除
+     */
+    @ApiModelProperty("是否删除（0 - 未删除，1 - 删除）")
+    private Integer isDelete;
+
     private static final long serialVersionUID = 1L;
 
 }
