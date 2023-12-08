@@ -1,6 +1,7 @@
 package com.runde.signinbackend.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.runde.signinbackend.common.ErrorCode;
@@ -13,6 +14,10 @@ import com.runde.signinbackend.model.vo.ClassVO;
 import com.runde.signinbackend.service.ClassService;
 import com.runde.signinbackend.utils.SqlUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements ClassService {
@@ -43,5 +48,13 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
         queryWrapper.eq(isDelete != null, "is_delete", isDelete);
         queryWrapper.orderBy(SqlUtil.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
         return queryWrapper;
+    }
+
+    @Override
+    public List<ClassVO> getClassVOList(List<Class> classes) {
+        if (CollectionUtil.isEmpty(classes)) {
+            return Collections.emptyList();
+        }
+        return classes.stream().map(this::getClassVO).collect(Collectors.toList());
     }
 }
