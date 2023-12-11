@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @BelongsProject sign-in-backend
@@ -13,8 +14,8 @@ import org.springframework.context.annotation.Bean;
  * @Description MyBatis Plus配置
  * @Version 1.0
  */
+@Configuration
 public class MyBatisPlusConfig {
-
     /**
      * 添加分页插件
      */
